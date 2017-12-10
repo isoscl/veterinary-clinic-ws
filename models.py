@@ -25,18 +25,6 @@ class Cita(models.Model):
         unique_together = (('cve_cita', 'fecha'),)
 
 
-class Cliente(models.Model):
-    rfc_cliente = models.CharField(primary_key=True, max_length=18)
-    nombre_cliente = models.TextField(blank=True, null=True)
-    direccion_cliente = models.TextField(blank=True, null=True)
-    telefono_cliente = models.TextField(blank=True, null=True)
-    email_cliente = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'Cliente'
-
-
 class DetalleCita(models.Model):
     cve_cita = models.ForeignKey(Cita, models.DO_NOTHING, db_column='cve_cita', primary_key=True)
     fecha = models.ForeignKey(Cita, models.DO_NOTHING, db_column='fecha')
@@ -64,18 +52,6 @@ class Mascota(models.Model):
     class Meta:
         managed = False
         db_table = 'Mascota'
-
-
-class Medico(models.Model):
-    rfc_medico = models.CharField(primary_key=True, max_length=18)
-    nombre_medico = models.TextField(blank=True, null=True)
-    direccion_medico = models.TextField(blank=True, null=True)
-    telefono_medico = models.TextField(blank=True, null=True)
-    email_medico = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'Medico'
 
 
 class Servicio(models.Model):

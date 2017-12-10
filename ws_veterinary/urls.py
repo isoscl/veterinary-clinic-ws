@@ -1,22 +1,12 @@
-"""ws_veterinary URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # url(r'^citas/', include('apps.citas.urls', namespace="citas")),
     url(r'^clientes/', include('apps.clientes.urls', namespace="clientes")),
+    # url(r'^detalle_citas/', include('apps.detalle_citas.urls', namespace="detalle_citas")),
+    # url(r'^mascotas/', include('apps.mascotas.urls', namespace="mascotas")),
+    url(r'^medicos/', include('apps.medicos.urls', namespace="medicos")),
+    # url(r'^servicios/', include('apps.servicios.urls', namespace="servicios")),
 ]
