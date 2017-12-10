@@ -4,7 +4,7 @@ import pymysql; pymysql.install_as_MySQLdb()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('WS_SECRET_KEY', '')
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', os.getenv('WS_ALLOWED_HOSTS', '')]
 
 INSTALLED_APPS = [
