@@ -1,11 +1,13 @@
-# from django.conf.urls import url
+from django.conf.urls import url
 
-# from .views import *
+from .views import *
 
-# urlpatterns = [
-#     url(r'^$', report, name='report'),
-#     url(r'^create/(?P<rfc>\w+)/(?P<nombre>[\w\s]+)/(?P<direccion>[\w\s]+)/(?P<telefono>\d+)/(?P<email>[\w@\.]+)/$', create, name='create'),
-#     url(r'^(?P<rfc>\w+)/$', read, name='read'),
-#     url(r'^(?P<rfc>\w+)/update/(?P<nombre>[\w\s]+)/(?P<direccion>[\w\s]+)/(?P<telefono>\d+)/(?P<email>[\w@\.]+)/$', update, name='update'),
-#     url(r'^(?P<rfc>\w+)/delete/$', delete, name='delete'),
-# ]
+urlpatterns = [
+    url(r'^$', report, name='report'),
+    url(r'^create/(?P<clave>\w+)/(?P<fecha>[\d-]+)/(?P<rfc>\w+)/(?P<id>\w+)/(?P<hora>([0-1]\d|[2][0-3]):([0-5]\d))/(?P<diagnostico>.+)/(?P<total>\d+\.?\d+)/$', 
+        create, name='create'),
+    url(r'^(?P<clave>\w+)/$', read, name='read'),
+    url(r'^(?P<clave>\w+)/update/(?P<fecha>[\d-]+)/(?P<rfc>\w+)/(?P<id>\w+)/(?P<hora>([0-1]\d|[2][0-3]):([0-5]\d))/(?P<diagnostico>.+)/(?P<total>\d+\.?\d+)/$', 
+        update, name='update'),
+    url(r'^(?P<clave>\w+)/delete/$', delete, name='delete'),
+]
