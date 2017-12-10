@@ -30,6 +30,7 @@ def update(request, rfc, nombre, direccion, telefono, email):
     medico.direccion_medico = direccion
     medico.telefono_medico = telefono
     medico.email_medico = email
+    medico.save()
     medico = serializers.serialize('json', [medico])
     return HttpResponse(medico, content_type='application/json')
 

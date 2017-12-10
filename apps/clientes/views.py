@@ -30,6 +30,7 @@ def update(request, rfc, nombre, direccion, telefono, email):
     cliente.direccion_cliente = direccion
     cliente.telefono_cliente = telefono
     cliente.email_cliente = email
+    cliente.save()
     cliente = serializers.serialize('json', [cliente])
     return HttpResponse(cliente, content_type='application/json')
 

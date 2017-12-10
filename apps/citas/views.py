@@ -34,6 +34,7 @@ def update(request, clave, fecha, rfc, id, hora, diagnostico, total):
     cita.hora = hora
     cita.diagnostico = diagnostico
     cita.total = float(total)
+    cita.save()
     cita = serializers.serialize('json', [cita])
     return HttpResponse(cita, content_type='application/json')
 

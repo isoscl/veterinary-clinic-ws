@@ -38,6 +38,7 @@ def update(request, id, rfc, nombre, especie, raza, color, tamanio, senia, fecha
     mascota.tamaño_mascota = tamanio
     mascota.señapart_mascota = senia
     mascota.fechanac_mascota = fecha
+    mascota.save()
     mascota = serializers.serialize('json', [mascota])
     return HttpResponse(mascota, content_type='application/json')
 

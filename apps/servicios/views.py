@@ -26,6 +26,7 @@ def update(request, clave, descripcion, precio):
     servicio = Servicio.objects.get(cve_servicio=clave)
     servicio.descripcion_servicio = descripcion
     servicio.precio_servicio = precio
+    servicio.save()
     servicio = serializers.serialize('json', [servicio])
     return HttpResponse(servicio, content_type='application/json')
 
