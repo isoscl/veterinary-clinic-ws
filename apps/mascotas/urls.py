@@ -4,10 +4,10 @@ from .views import *
 
 urlpatterns = [
     url(r'^$', report, name='report'),
-    url(r'^create/(?P<id>\w+)/(?P<rfc>\w+)/(?P<nombre>[\w\s]+)/(?P<especie>[\w\s]+)/(?P<raza>[\w\s]+)/(?P<color>[\w\s]+)/(?P<tamanio>[\w\s]+)/(?P<senia>[\w\s]+)/(?P<fecha>[\d-]+)/$', 
+    url(r'^create/(?P<id>.+)/(?P<rfc>.+)/(?P<nombre>.+)/(?P<especie>.+)/(?P<raza>.+)/(?P<color>.+)/(?P<tamanio>.+)/(?P<senia>.+)/(?P<fecha>.+)/$', 
         create, name='create'),
-    url(r'^(?P<id>\w+)/$', read, name='read'),
-    url(r'^(?P<id>\w+)/update/(?P<rfc>\w+)/(?P<nombre>[\w\s]+)/(?P<especie>[\w\s]+)/(?P<raza>[\w\s]+)/(?P<color>[\w\s]+)/(?P<tamanio>[\w\s]+)/(?P<senia>[\w\s]+)/(?P<fecha>[\d-]+)/$', 
+    url(r'^(?P<id>.+)/$', read, name='read'),
+    url(r'^(?P<id>.+)/update/(?P<rfc>.+)/(?P<nombre>.+)/(?P<especie>.+)/(?P<raza>.+)/(?P<color>.+)/(?P<tamanio>.+)/(?P<senia>.+)/(?P<fecha>.+)/$', 
         update, name='update'),
-    url(r'^(?P<id>\w+)/delete/$', delete, name='delete'),
+    url(r'^(?P<id>.+)/delete/$', delete, name='delete'),
 ]
