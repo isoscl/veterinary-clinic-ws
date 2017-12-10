@@ -38,22 +38,6 @@ class DetalleCita(models.Model):
         unique_together = (('cve_cita', 'fecha', 'cve_servicio'),)
 
 
-class Mascota(models.Model):
-    id_mascota = models.CharField(primary_key=True, max_length=18)
-    rfc_cliente = models.ForeignKey(Cliente, models.DO_NOTHING, db_column='rfc_cliente')
-    nombre_mascota = models.TextField(blank=True, null=True)
-    especie_mascota = models.TextField(blank=True, null=True)
-    raza_mascota = models.TextField(blank=True, null=True)
-    color_mascota = models.TextField(blank=True, null=True)
-    tamaño_mascota = models.TextField(blank=True, null=True)
-    señapart_mascota = models.TextField(blank=True, null=True)
-    fechanac_mascota = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'Mascota'
-
-
 class Servicio(models.Model):
     cve_servicio = models.CharField(primary_key=True, max_length=18)
     descripcion_servicio = models.TextField(blank=True, null=True)
