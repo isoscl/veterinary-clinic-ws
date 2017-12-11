@@ -2,6 +2,7 @@ from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
+from apps.citas.models import Cita
 from .models import Mascota
 
 
@@ -45,3 +46,8 @@ def delete(request, id):
     mascota = Mascota.objects.get(id_mascota=id).delete()
     message = {'message': 'mascota eliminado'} if mascota else {'message': 'No se pudo eliminar el mascota'}
     return JsonResponse(message)
+
+def record(request, id):
+    record = serializers.serialize('json', Cita.objects.filter(id_mascota=id))
+    return HttpResponse(record, content_type='application/json')
+    

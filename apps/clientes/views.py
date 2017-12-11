@@ -2,6 +2,7 @@ from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
+from apps.mascotas.models import Mascota
 from .models import Cliente
 
 
@@ -20,10 +21,6 @@ def create(request, rfc, nombre, direccion, telefono, email):
     cliente = serializers.serialize('json', [cliente])
     return HttpResponse(cliente, content_type='application/json')
 
-def read(request, rfc):
-    cliente = serializers.serialize('json', [Cliente.objects.get(rfc_cliente=rfc)])
-    return HttpResponse(cliente, content_type='application/json')
-
 def update(request, rfc, nombre, direccion, telefono, email):
     cliente = Cliente.objects.get(rfc_cliente=rfc)
     cliente.nombre_cliente = nombre
@@ -38,3 +35,11 @@ def delete(request, rfc):
     cliente = Cliente.objects.get(rfc_cliente=rfc).delete()
     message = {'message': 'Cliente eliminado'} if cliente else {'message': 'No se pudo eliminar el cliente'}
     return JsonResponse(message)
+
+def pets(request, rfc):
+    pets = serializers.serialize('json', Mascota.objects.filter(rfc_cliente=rfc))
+    return HttpResponse(pets, content_type='application/json')
+
+def read(request, rfc):
+    cliente = serializers.serialize('json', [Cliente.objects.get(rfc_cliente=rfc)])
+    return HttpResponse(cliente, content_type='application/json')

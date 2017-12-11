@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^(?P<id>.+)/delete/$', delete, name='delete'),
     url(r'^(?P<id>.+)/update/(?P<nombre>.+)/(?P<especie>.+)/(?P<raza>.+)/(?P<color>.+)/(?P<tamanio>.+)/(?P<senia>.+)/(?P<fecha>.+)/$', 
         update, name='update'),
+    url(r'^(?P<id>.+)/citas/$', record, name='record'),
     url(r'^(?P<id>.+)/$', read, name='read'),
 ]
