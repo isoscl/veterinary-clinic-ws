@@ -28,9 +28,8 @@ def read(request, id):
     mascota = serializers.serialize('json', [Mascota.objects.get(id_mascota=id)])
     return HttpResponse(mascota, content_type='application/json')
 
-def update(request, id, rfc, nombre, especie, raza, color, tamanio, senia, fecha):
+def update(request, id, nombre, especie, raza, color, tamanio, senia, fecha):
     mascota = Mascota.objects.get(id_mascota=id)
-    mascota.rfc_cliente = rfc
     mascota.nombre_mascota = nombre
     mascota.especie_mascota = especie
     mascota.raza_mascota = raza
