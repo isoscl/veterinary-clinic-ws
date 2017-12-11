@@ -15,7 +15,7 @@ def create(request, fecha, rfc, id, hora, diagnostico, total):
         ultima_cita = citas[len(citas)-1]
         tabla, numero = ultima_cita.pk.split('_')
         clave = '_'.join((tabla, str(int(numero) + 1)))
-    except IndexError:
+    except:
         clave = 'cita_1'
 
     cita = Cita.objects.create(
