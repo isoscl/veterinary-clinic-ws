@@ -9,7 +9,15 @@ def report(request):
     servicios = serializers.serialize('json', Servicio.objects.all())
     return HttpResponse(servicios, content_type='application/json')
 
-def create(request, clave, descripcion, precio):
+def create(request, descripcion, precio):
+    try: 
+        servicios = Servicio.objects.all()
+        ultimo_servicio = servicios[len(servicios)-1]
+        tabla, numero = ultimo_servicio.pk.split('_')
+        clave = '_'.join((tabla, str(int(numero) + 1)))
+    except:
+        clave = 'servicio_1'
+
     servicio = Servicio.objects.create(
         cve_servicio = clave,
         descripcion_servicio = descripcion,
