@@ -9,7 +9,15 @@ def report(request):
     citas = serializers.serialize('json', Cita.objects.all())
     return HttpResponse(citas, content_type='application/json')
 
-def create(request, clave, fecha, rfc, id, hora, diagnostico, total):
+def create(request, fecha, rfc, id, hora, diagnostico, total):
+    try: 
+        citas = Cita.objects.all()
+        ultima_cita = citas[len(citas)-1]
+        tabla, numero = ultima_cita.pk.split('_')
+        clave = '_'.join((tabla, str(int(numero) + 1)))
+    except IndexError:
+        clave = 'cita_1'
+
     cita = Cita.objects.create(
         cve_cita = clave,
         fecha = fecha,
