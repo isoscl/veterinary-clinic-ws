@@ -7,6 +7,7 @@ class Cliente(models.Model):
     direccion_cliente = models.TextField(blank=True, null=True)
     telefono_cliente = models.TextField(blank=True, null=True)
     email_cliente = models.TextField(blank=True, null=True)
+    imagen_cliente = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

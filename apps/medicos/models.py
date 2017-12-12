@@ -7,6 +7,7 @@ class Medico(models.Model):
     direccion_medico = models.TextField(blank=True, null=True)
     telefono_medico = models.TextField(blank=True, null=True)
     email_medico = models.TextField(blank=True, null=True)
+    imagen_medico = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

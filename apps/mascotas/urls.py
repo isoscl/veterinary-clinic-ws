@@ -4,11 +4,8 @@ from .views import *
 
 urlpatterns = [
     url(r'^$', report, name='report'),
-    url(r'^create/(?P<id>.+)/(?P<rfc>.+)/(?P<nombre>.+)/(?P<especie>.+)/(?P<raza>.+)/(?P<color>.+)/(?P<tamanio>.+)/(?P<senia>.+)/(?P<fecha>.+)/$', 
-        create, name='create'),
-    url(r'^(?P<id>.+)/delete/$', delete, name='delete'),
-    url(r'^(?P<id>.+)/update/(?P<nombre>.+)/(?P<especie>.+)/(?P<raza>.+)/(?P<color>.+)/(?P<tamanio>.+)/(?P<senia>.+)/(?P<fecha>.+)/$', 
-        update, name='update'),
-    url(r'^(?P<id>.+)/citas/$', record, name='record'),
-    url(r'^(?P<id>.+)/$', read, name='read'),
+    url(r'^create/$', create, name='create'),
+    url(r'^update/$', update, name='update'),
+    url(r'^delete/$', delete, name='delete'),
+    url(r'^citas/$', record, name='record'),
 ]

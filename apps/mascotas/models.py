@@ -11,6 +11,7 @@ class Mascota(models.Model):
     tamaño_mascota = models.TextField(blank=True, null=True)
     señapart_mascota = models.TextField(blank=True, null=True)
     fechanac_mascota = models.TextField(blank=True, null=True)
+    imagen_mascota = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
