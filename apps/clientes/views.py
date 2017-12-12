@@ -31,7 +31,6 @@ def create(request):
         direccion_cliente = direccion,
         telefono_cliente = telefono,
         email_cliente = email,
-        imagen_cliente = imagen
     )
     cliente = serializers.serialize('json', [cliente])
     return HttpResponse(cliente, content_type='application/json')

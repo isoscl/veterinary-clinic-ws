@@ -30,7 +30,6 @@ def create(request):
         direccion_medico = direccion,
         telefono_medico = telefono,
         email_medico = email,
-        imagen_medico = imagen
     )
     medico = serializers.serialize('json', [medico])
     return HttpResponse(medico, content_type='application/json')

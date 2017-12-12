@@ -33,7 +33,6 @@ def create(request):
         cve_servicio = cve,
         descripcion_servicio = descripcion,
         precio_servicio = precio,
-        imagen_servicio = imagen
     )
     servicio = serializers.serialize('json', [servicio])
     return HttpResponse(servicio, content_type='application/json')

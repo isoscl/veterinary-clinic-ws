@@ -38,7 +38,6 @@ def create(request):
         tamaño_mascota = tamanio,
         señapart_mascota = senia,
         fechanac_mascota = fecha,
-        imagen_mascota = imagen
     )
     mascota = serializers.serialize('json', [mascota])
     return HttpResponse(mascota, content_type='application/json')
