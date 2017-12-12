@@ -12,10 +12,10 @@ from .models import Cliente
 def report(request):
     if 'rfc' in request.POST:
         objects = Cliente.objects.filter(rfc_cliente=request.POST['rfc']).values()
-        return JsonResponse({'objects': list(objects)})
     else:
         objects = Cliente.objects.all().values()
-        return JsonResponse({'objects': list(objects)})
+
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def create(request):

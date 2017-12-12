@@ -10,11 +10,11 @@ from .models import Cita
 @csrf_exempt
 def report(request):
     if 'cve' in request.POST:
-        citas = serializers.serialize('json', [Cita.objects.get(cve_cita=request.POST['cve'])])
+        objects = Cita.objects.filter(cve_cita=request.POST['cve']).values()
     else:
-        citas = serializers.serialize('json', Cita.objects.all())
+        objects = Cita.objects.all().values()
 
-    return HttpResponse(citas, content_type='application/json')
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def create(request):
@@ -42,8 +42,8 @@ def create(request):
         diagnostico = diagnostico,
         total = total
     )
-    cita = serializers.serialize('json', [cita])
-    return HttpResponse(cita, content_type='application/json')
+    objects = Cita.objects.filter(cve_cita=cve).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def update(request):
@@ -64,8 +64,8 @@ def update(request):
     cita.total = float(total)
 
     cita.save()
-    cita = serializers.serialize('json', [cita])
-    return HttpResponse(cita, content_type='application/json')
+    objects = Cita.objects.filter(cve_cita=cve).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def delete(request):

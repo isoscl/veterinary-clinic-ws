@@ -9,12 +9,13 @@ from .models import DetalleCita
 
 @csrf_exempt
 def report(request):
-    if ['cve_cita', 'fecha', 'cve_servicio'] in request.POST:
-        detalle_citas = serializers.serialize('json', [DetalleCita.objects.get(cve_cita=cve_cita, fecha=fecha, cve_servicio=cve_servicio)])
+    if 'cve_cita' in request.POST and 'fecha' in request.POST and 'cve_servicio' in request.POST:
+        objects = DetalleCita.objects.filter(cve_cita=request.POST['cve_cita'],\
+            fecha=request.POST['fecha'], cve_servicio=request.POST['cve_servicio']).values()
     else:
-        detalle_citas = serializers.serialize('json', DetalleCita.objects.all())
+        objects = DetalleCita.objects.all().values()
 
-    return HttpResponse(detalle_citas, content_type='application/json')
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def create(request):
@@ -31,8 +32,9 @@ def create(request):
         cantidad = cantidad,
         subtotal = subtotal
     )
-    detalle_cita = serializers.serialize('json', [detalle_cita])
-    return HttpResponse(detalle_cita, content_type='application/json')
+    objects = DetalleCita.objects.filter(cve_cita=cve_cita,\
+        fecha=fecha, cve_servicio=cve_servicio).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def update(request):
@@ -45,10 +47,10 @@ def update(request):
     detalle_cita = DetalleCita.objects.get(cve_cita=cve_cita, fecha=fecha, cve_servicio=cve_servicio)
     detalle_cita.cantidad = int(cantidad)
     detalle_cita.subtotal = float(subtotal)
-
     detalle_cita.save()
-    detalle_cita = serializers.serialize('json', [detalle_cita])
-    return HttpResponse(detalle_cita, content_type='application/json')
+    objects = DetalleCita.objects.filter(cve_cita=cve_cita,\
+        fecha=fecha, cve_servicio=cve_servicio).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def delete(request):

@@ -10,11 +10,11 @@ from .models import Medico
 @csrf_exempt
 def report(request):
     if 'rfc' in request.POST:
-        medicos = serializers.serialize('json', [Medico.objects.get(rfc_medico=request.POST['rfc'])])
+        objects = Medico.objects.filter(rfc_medico=request.POST['rfc']).values()
     else:
-        medicos = serializers.serialize('json', Medico.objects.all())
+        objects = Medico.objects.all().values()
 
-    return HttpResponse(medicos, content_type='application/json')
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def create(request):
@@ -31,8 +31,8 @@ def create(request):
         telefono_medico = telefono,
         email_medico = email,
     )
-    medico = serializers.serialize('json', [medico])
-    return HttpResponse(medico, content_type='application/json')
+    objects = Medico.objects.filter(rfc_medico=rfc).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def update(request):
@@ -48,8 +48,8 @@ def update(request):
     medico.telefono_medico = telefono
     medico.email_medico = email
     medico.save()
-    medico = serializers.serialize('json', [medico])
-    return HttpResponse(medico, content_type='application/json')
+    objects = Medico.objects.filter(rfc_medico=rfc).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def delete(request):
@@ -66,5 +66,5 @@ def image(request):
     filename = fs.save(imagen.name, imagen)
     medico.imagen_medico = filename
     medico.save()
-    medico = serializers.serialize('json', [medico])
-    return HttpResponse(medico, content_type='application/json')
+    objects = Medico.objects.filter(rfc_medico=request.POST['rfc']).values()
+    return JsonResponse({'objects': list(objects)})

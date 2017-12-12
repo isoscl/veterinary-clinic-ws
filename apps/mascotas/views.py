@@ -11,11 +11,12 @@ from .models import Mascota
 @csrf_exempt
 def report(request):
     if 'id' in request.POST:
-        mascotas = serializers.serialize('json', [Mascota.objects.get(id_mascota=request.POST['id'])])
+        objects = Mascota.objects.filter(id_mascota=request.POST['id']).values()
     else:
-        mascotas = serializers.serialize('json', Mascota.objects.all())
+        objects = Mascota.objects.all().values()
 
-    return HttpResponse(mascotas, content_type='application/json')
+    return JsonResponse({'objects': list(objects)})
+
 
 @csrf_exempt
 def create(request):
@@ -39,8 +40,8 @@ def create(request):
         señapart_mascota = senia,
         fechanac_mascota = fecha,
     )
-    mascota = serializers.serialize('json', [mascota])
-    return HttpResponse(mascota, content_type='application/json')
+    objects = Mascota.objects.filter(id_mascota=id).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def update(request):
@@ -62,8 +63,8 @@ def update(request):
     mascota.señapart_mascota = senia
     mascota.fechanac_mascota = fecha
     mascota.save()
-    mascota = serializers.serialize('json', [mascota])
-    return HttpResponse(mascota, content_type='application/json')
+    objects = Mascota.objects.filter(id_mascota=id).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def delete(request):
@@ -75,8 +76,8 @@ def delete(request):
 @csrf_exempt
 def record(request, id):
     id = request.POST['id']
-    record = serializers.serialize('json', Cita.objects.filter(id_mascota=id))
-    return HttpResponse(record, content_type='application/json')
+    objects = Cita.objects.filter(id_mascota=id).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def image(request):
@@ -86,5 +87,5 @@ def image(request):
     filename = fs.save(imagen.name, imagen)
     mascota.imagen_mascota = filename
     mascota.save()
-    mascota = serializers.serialize('json', [mascota])
-    return HttpResponse(mascota, content_type='application/json')
+    objects = Mascota.objects.filter(id_mascota=request.POST['rfc']).values()
+    return JsonResponse({'objects': list(objects)})

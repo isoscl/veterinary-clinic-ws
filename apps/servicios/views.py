@@ -10,11 +10,11 @@ from .models import Servicio
 @csrf_exempt
 def report(request):
     if 'cve' in request.POST:
-        servicios = serializers.serialize('json', [Servicio.objects.get(cve_servicio=request.POST['cve'])])
+        objects = Servicio.objects.filter(cve_servicio=request.POST['cve']).values()
     else:
-        servicios = serializers.serialize('json', Servicio.objects.all())
+        objects = Servicio.objects.all().values()
 
-    return HttpResponse(servicios, content_type='application/json')
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def create(request):
@@ -34,8 +34,8 @@ def create(request):
         descripcion_servicio = descripcion,
         precio_servicio = precio,
     )
-    servicio = serializers.serialize('json', [servicio])
-    return HttpResponse(servicio, content_type='application/json')
+    objects = Servicio.objects.filter(cve_servicio=cve).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def update(request):
@@ -47,8 +47,8 @@ def update(request):
     servicio.descripcion_servicio = descripcion
     servicio.precio_servicio = precio
     servicio.save()
-    servicio = serializers.serialize('json', [servicio])
-    return HttpResponse(servicio, content_type='application/json')
+    objects = Servicio.objects.filter(cve_servicio=cve).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def delete(request):
@@ -59,11 +59,11 @@ def delete(request):
 
 @csrf_exempt
 def image(request):
-    servicio = Servicio.objects.get(cve_servicio=request.POST['rfc'])
+    servicio = Servicio.objects.get(cve_servicio=request.POST['cve'])
     imagen = request.FILES['imagen']
     fs = FileSystemStorage()
     filename = fs.save(imagen.name, imagen)
     servicio.imagen_servicio = filename
     servicio.save()
-    servicio = serializers.serialize('json', [servicio])
-    return HttpResponse(servicio, content_type='application/json')
+    sobjects = Servicio.objects.filter(cve_servicio=request.POST['cve']).values()
+    return JsonResponse({'objects': list(objects)})
