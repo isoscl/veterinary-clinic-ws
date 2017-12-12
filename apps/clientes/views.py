@@ -11,14 +11,11 @@ from .models import Cliente
 @csrf_exempt
 def report(request):
     if 'rfc' in request.POST:
-        results = Cliente.objects.filter(rfc_cliente=request.POST['rfc'])\
-                .values('rfc_cliente', 'nombre_cliente', 'direccion_cliente', 'telefono_cliente', 'email_cliente')
-        return JsonResponse({'results': list(results)})
+        objects = Cliente.objects.filter(rfc_cliente=request.POST['rfc']).values()
+        return JsonResponse({'objects': list(objects)})
     else:
-        results = Cliente.objects.all()\
-                .values('rfc_cliente', 'nombre_cliente', 'direccion_cliente', 'telefono_cliente', 'email_cliente')
-        return JsonResponse({'results': list(results)})
-
+        objects = Cliente.objects.all().values()
+        return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def create(request):
@@ -35,8 +32,8 @@ def create(request):
         telefono_cliente = telefono,
         email_cliente = email,
     )
-    cliente = serializers.serialize('json', [cliente])
-    return HttpResponse(cliente, content_type='application/json')
+    objects = Cliente.objects.filter(rfc_cliente=rfc).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def update(request):
@@ -52,8 +49,8 @@ def update(request):
     cliente.telefono_cliente = telefono
     cliente.email_cliente = email
     cliente.save()
-    cliente = serializers.serialize('json', [cliente])
-    return HttpResponse(cliente, content_type='application/json')
+    objects = Cliente.objects.filter(rfc_cliente=rfc).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def delete(request):
@@ -64,9 +61,8 @@ def delete(request):
 
 @csrf_exempt
 def pets(request):
-    rfc = request.POST['rfc']
-    pets = serializers.serialize('json', Mascota.objects.filter(rfc_cliente=rfc))
-    return HttpResponse(pets, content_type='application/json')
+    objects = Mascota.objects.filter(rfc_cliente=request.POST['rfc']).values()
+    return JsonResponse({'objects': list(objects)})
 
 @csrf_exempt
 def image(request):
@@ -76,5 +72,5 @@ def image(request):
     filename = fs.save(imagen.name, imagen)
     cliente.imagen_cliente = filename
     cliente.save()
-    cliente = serializers.serialize('json', [cliente])
-    return HttpResponse(cliente, content_type='application/json')
+    objects = Cliente.objects.filter(rfc_cliente=request.POST['rfc']).values()
+    return JsonResponse({'objects': list(objects)})
