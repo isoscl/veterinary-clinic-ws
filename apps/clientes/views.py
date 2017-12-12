@@ -25,14 +25,6 @@ def create(request):
     telefono = request.POST['telefono']
     email = request.POST['email']
 
-    if 'imagen' in request.FILES:
-        imagen = request.FILES['imagen']
-        fs = FileSystemStorage()
-        fs.save(imagen.name, imagen)
-        imagen = imagen.name
-    else:
-        imagen = None
-
     cliente = Cliente.objects.create(
         rfc_cliente = rfc,
         nombre_cliente = nombre,
@@ -57,13 +49,6 @@ def update(request):
     cliente.direccion_cliente = direccion
     cliente.telefono_cliente = telefono
     cliente.email_cliente = email
-    
-    if 'imagen' in request.FILES:
-        imagen = request.FILES['imagen']
-        fs = FileSystemStorage()
-        fs.save(imagen.name, imagen)
-        cliente.imagen_cliente = imagen.name
-        
     cliente.save()
     cliente = serializers.serialize('json', [cliente])
     return HttpResponse(cliente, content_type='application/json')
@@ -80,3 +65,14 @@ def pets(request):
     rfc = request.POST['rfc']
     pets = serializers.serialize('json', Mascota.objects.filter(rfc_cliente=rfc))
     return HttpResponse(pets, content_type='application/json')
+
+@csrf_exempt
+def image(request):
+    cliente = Cliente.objects.get(rfc_cliente=request.POST['rfc'])
+    imagen = request.FILES['imagen']
+    fs = FileSystemStorage()
+    filename = fs.save(imagen.name, imagen)
+    cliente.imagen_cliente = filename
+    cliente.save()
+    cliente = serializers.serialize('json', [cliente])
+    return HttpResponse(cliente, content_type='application/json')

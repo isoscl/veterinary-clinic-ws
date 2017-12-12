@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^create/$', create, name='create'),
     url(r'^update/$', update, name='update'),
     url(r'^delete/$', delete, name='delete'),
+    url(r'^image/$', image, name='image'),
 ]

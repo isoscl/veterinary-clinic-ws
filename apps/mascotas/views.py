@@ -29,14 +29,6 @@ def create(request):
     senia = request.POST['senia']
     fecha = request.POST['fecha']
 
-    if 'imagen' in request.FILES:
-        imagen = request.FILES['imagen']
-        fs = FileSystemStorage()
-        fs.save(imagen.name, imagen)
-        imagen = imagen.name
-    else:
-        imagen = None
-
     mascota = Mascota.objects.create(
         id_mascota = id,
         nombre_mascota = nombre,
@@ -70,13 +62,6 @@ def update(request):
     mascota.tamaño_mascota = tamanio
     mascota.señapart_mascota = senia
     mascota.fechanac_mascota = fecha
-
-    if 'imagen' in request.FILES:
-        imagen = request.FILES['imagen']
-        fs = FileSystemStorage()
-        fs.save(imagen.name, imagen)
-        mascota.imagen_mascota = imagen.name
-
     mascota.save()
     mascota = serializers.serialize('json', [mascota])
     return HttpResponse(mascota, content_type='application/json')
@@ -88,7 +73,19 @@ def delete(request):
     message = {'message': 'mascota eliminado'} if mascota else {'message': 'No se pudo eliminar el mascota'}
     return JsonResponse(message)
 
+@csrf_exempt
 def record(request, id):
     id = request.POST['id']
     record = serializers.serialize('json', Cita.objects.filter(id_mascota=id))
     return HttpResponse(record, content_type='application/json')
+
+@csrf_exempt
+def image(request):
+    mascota = Mascota.objects.get(id_mascota=request.POST['rfc'])
+    imagen = request.FILES['imagen']
+    fs = FileSystemStorage()
+    filename = fs.save(imagen.name, imagen)
+    mascota.imagen_mascota = filename
+    mascota.save()
+    mascota = serializers.serialize('json', [mascota])
+    return HttpResponse(mascota, content_type='application/json')

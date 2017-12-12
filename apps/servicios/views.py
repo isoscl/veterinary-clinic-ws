@@ -29,14 +29,6 @@ def create(request):
     descripcion = request.POST['descripcion']
     precio = request.POST['precio']
 
-    if 'imagen' in request.FILES:
-        imagen = request.FILES['imagen']
-        fs = FileSystemStorage()
-        fs.save(imagen.name, imagen)
-        imagen = imagen.name
-    else:
-        imagen = None
-
     servicio = Servicio.objects.create(
         cve_servicio = cve,
         descripcion_servicio = descripcion,
@@ -55,13 +47,6 @@ def update(request):
     servicio = Servicio.objects.get(cve_servicio=cve)
     servicio.descripcion_servicio = descripcion
     servicio.precio_servicio = precio
-    
-    if 'imagen' in request.FILES:
-        imagen = request.FILES['imagen']
-        fs = FileSystemStorage()
-        fs.save(imagen.name, imagen)
-        servicio.imagen_servicio = imagen.name
-
     servicio.save()
     servicio = serializers.serialize('json', [servicio])
     return HttpResponse(servicio, content_type='application/json')
@@ -72,3 +57,14 @@ def delete(request):
     servicio = Servicio.objects.get(cve_servicio=cve).delete()
     message = {'message': 'servicio eliminado'} if servicio else {'message': 'No se pudo eliminar el servicio'}
     return JsonResponse(message)
+
+@csrf_exempt
+def image(request):
+    servicio = Servicio.objects.get(cve_servicio=request.POST['rfc'])
+    imagen = request.FILES['imagen']
+    fs = FileSystemStorage()
+    filename = fs.save(imagen.name, imagen)
+    servicio.imagen_servicio = filename
+    servicio.save()
+    servicio = serializers.serialize('json', [servicio])
+    return HttpResponse(servicio, content_type='application/json')

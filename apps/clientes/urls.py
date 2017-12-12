@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^update/$', update, name='update'),
     url(r'^delete/$', delete, name='delete'),
     url(r'^mascotas/$', pets, name='pets'),
+    url(r'^image/$', image, name='image'),
 ]

@@ -24,14 +24,6 @@ def create(request):
     telefono = request.POST['telefono']
     email = request.POST['email']
 
-    if 'imagen' in request.FILES:
-        imagen = request.FILES['imagen']
-        fs = FileSystemStorage()
-        fs.save(imagen.name, imagen)
-        imagen = imagen.name
-    else:
-        imagen = None
-
     medico = Medico.objects.create(
         rfc_medico = rfc,
         nombre_medico = nombre,
@@ -56,13 +48,6 @@ def update(request):
     medico.direccion_medico = direccion
     medico.telefono_medico = telefono
     medico.email_medico = email
-
-    if 'imagen' in request.FILES:
-        imagen = request.FILES['imagen']
-        fs = FileSystemStorage()
-        fs.save(imagen.name, imagen)
-        medico.imagen_medico = imagen.name
-
     medico.save()
     medico = serializers.serialize('json', [medico])
     return HttpResponse(medico, content_type='application/json')
@@ -73,3 +58,14 @@ def delete(request):
     medico = Medico.objects.get(rfc_medico=rfc).delete()
     message = {'message': 'medico eliminado'} if medico else {'message': 'No se pudo eliminar el medico'}
     return JsonResponse(message)
+
+@csrf_exempt
+def image(request):
+    medico = Medico.objects.get(rfc_medico=request.POST['rfc'])
+    imagen = request.FILES['imagen']
+    fs = FileSystemStorage()
+    filename = fs.save(imagen.name, imagen)
+    medico.imagen_medico = filename
+    medico.save()
+    medico = serializers.serialize('json', [medico])
+    return HttpResponse(medico, content_type='application/json')
