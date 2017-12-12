@@ -11,11 +11,14 @@ from .models import Cliente
 @csrf_exempt
 def report(request):
     if 'rfc' in request.POST:
-        clientes = serializers.serialize('json', [Cliente.objects.get(rfc_cliente=request.POST['rfc'])])
+        results = Cliente.objects.filter(rfc_cliente=request.POST['rfc'])\
+                .values('rfc_cliente', 'nombre_cliente', 'direccion_cliente', 'telefono_cliente', 'email_cliente')
+        return JsonResponse({'results': list(results)})
     else:
-        clientes = serializers.serialize('json', Cliente.objects.all())
+        results = Cliente.objects.all()\
+                .values('rfc_cliente', 'nombre_cliente', 'direccion_cliente', 'telefono_cliente', 'email_cliente')
+        return JsonResponse({'results': list(results)})
 
-    return HttpResponse(clientes, content_type='application/json')
 
 @csrf_exempt
 def create(request):
