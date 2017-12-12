@@ -5,7 +5,8 @@ import pymysql; pymysql.install_as_MySQLdb()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('WS_SECRET_KEY', '')
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', os.getenv('WS_ALLOWED_HOSTS', '')]
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['127.0.0.1', os.getenv('WS_ALLOWED_HOSTS', '')]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -87,3 +88,6 @@ USE_TZ = True
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')

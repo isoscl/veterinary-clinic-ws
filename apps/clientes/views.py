@@ -1,6 +1,8 @@
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.core.files.storage import FileSystemStorage
 
 from apps.mascotas.models import Mascota
 from .models import Cliente
@@ -43,3 +45,13 @@ def pets(request, rfc):
 def read(request, rfc):
     cliente = serializers.serialize('json', [Cliente.objects.get(rfc_cliente=rfc)])
     return HttpResponse(cliente, content_type='application/json')
+
+@csrf_exempt
+def image(request):
+    if request.method == 'POST' and request.FILES['img']:
+        img = request.FILES['img']
+        fs = FileSystemStorage()
+        filename = fs.save(img.name, img)
+        uploaded_file_url = fs.url(filename)
+        return HttpResponse(uploaded_file_url)
+    return HttpResponse('bad')
